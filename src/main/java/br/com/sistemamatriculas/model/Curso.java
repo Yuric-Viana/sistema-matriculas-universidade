@@ -5,30 +5,42 @@ import java.util.List;
 
 public class Curso {
 
-    private String codigo;
+    private int codigo;
     private String nome;
     private int numeroCreditos;
     private List<Disciplina> disciplinas = new ArrayList<>();
 
-    public Curso(String codigo, String nome, int numeroCreditos) {
+    public Curso(int codigo, String nome, int numeroCreditos) {
         this.codigo = codigo;
         this.nome = nome;
         this.numeroCreditos = numeroCreditos;
     }
 
     public void adicionarDisciplina(Disciplina disciplina) {
-        // TODO: implementar
+        if (disciplina == null) {
+            throw new IllegalArgumentException("A disciplina não pode ser nula");
+        }
+
+        if (!disciplinas.contains(disciplina)) {
+            disciplinas.add(disciplina);
+        }
     }
 
     public void removerDisciplina(Disciplina disciplina) {
-        // TODO: implementar
+        if (disciplina == null) {
+            throw new IllegalArgumentException("A disciplina não pode ser nula");
+        }
+
+        if (disciplinas.contains(disciplina)) {
+            disciplinas.remove(disciplina);
+        }
     }
 
-    public String getCodigo() {
+    public int getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(String codigo) {
+    public void setCodigo(int codigo) {
         this.codigo = codigo;
     }
 
@@ -55,4 +67,12 @@ public class Curso {
     public void setDisciplinas(List<Disciplina> disciplinas) {
         this.disciplinas = disciplinas;
     }
+
+    @Override
+    public String toString() {
+        return "Curso [codigo=" + codigo + ", nome=" + nome + ", numeroCreditos=" + numeroCreditos + ", disciplinas="
+                + disciplinas + "]";
+    }
+
+    
 }

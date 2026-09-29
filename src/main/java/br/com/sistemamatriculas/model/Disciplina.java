@@ -2,13 +2,13 @@ package br.com.sistemamatriculas.model;
 
 public class Disciplina {
 
-    private String codigo;
+    private int codigo;
     private String nome;
     private int creditos;
     private int cargaHoraria;
 
     public Disciplina(
-        String codigo,
+        int codigo,
         String nome,
         int creditos,
         int cargaHoraria
@@ -24,11 +24,11 @@ public class Disciplina {
         return false;
     }
 
-    public String getCodigo() {
+    public int getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(String codigo) {
+    public void setCodigo(int codigo) {
         this.codigo = codigo;
     }
 
@@ -55,4 +55,12 @@ public class Disciplina {
     public void setCargaHoraria(int cargaHoraria) {
         this.cargaHoraria = cargaHoraria;
     }
+
+    @Override
+    public String toString() {
+        return "Disciplina [codigo=" + codigo + ", nome=" + nome + ", creditos=" + creditos + ", cargaHoraria="
+                + cargaHoraria + "]";
+    }
+
+    
 }
