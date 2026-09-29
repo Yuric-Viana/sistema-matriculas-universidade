@@ -8,7 +8,13 @@ public class Aluno extends Usuario {
     private String matricula;
     private List<MatriculaSemestral> matriculas;
 
-    public Aluno(Long id, String nome, String login, String senha, String matricula) {
+    public Aluno(
+            Long id,
+            String nome,
+            String login,
+            String senha,
+            String matricula
+    ) {
         super(id, nome, login, senha);
         this.matricula = matricula;
         this.matriculas = new ArrayList<>();
@@ -20,13 +26,17 @@ public class Aluno extends Usuario {
 
         for (MatriculaSemestral matriculaSemestral : matriculas) {
 
-            if (matriculaSemestral.getSemestreLetivo() == null) {
+            SemestreLetivo semestre = matriculaSemestral.getSemestreLetivo();
+
+            if (semestre == null) {
                 continue;
             }
 
-            for (OfertaDisciplina oferta : matriculaSemestral.getSemestreLetivo().getOfertas()) {
+            for (OfertaDisciplina oferta : semestre.getOfertas()) {
 
-                if (oferta.verificarDisponibilidaDeVagas()) {
+                if (oferta.verificarDisponibilidaDeVagas()
+                        && !ofertasDisponiveis.contains(oferta)) {
+
                     ofertasDisponiveis.add(oferta);
                 }
             }
@@ -35,15 +45,19 @@ public class Aluno extends Usuario {
         return ofertasDisponiveis;
     }
 
-    public void realizarMatricula(MatriculaSemestral matricula) {
+    public void realizarMatricula(MatriculaSemestral matriculaSemestral) {
 
-        if (matricula == null) {
+        if (matriculaSemestral == null) {
             throw new IllegalArgumentException(
-                    "A matrícula não pode ser nula.");
+                    "A matrícula não pode ser nula."
+            );
         }
 
-        if (!matriculas.contains(matricula)) {
-            matriculas.add(matricula);
+        if (!matriculas.contains(matriculaSemestral)) {
+
+            matriculaSemestral.setAluno(this);
+
+            matriculas.add(matriculaSemestral);
         }
     }
 
@@ -51,19 +65,23 @@ public class Aluno extends Usuario {
 
         if (item == null) {
             throw new IllegalArgumentException(
-                    "O item da matrícula não pode ser nulo.");
+                    "O item da matrícula não pode ser nulo."
+            );
         }
 
         for (MatriculaSemestral matriculaSemestral : matriculas) {
 
             if (matriculaSemestral.getItens().contains(item)) {
+
                 matriculaSemestral.cancelarItem(item);
+
                 return;
             }
         }
 
         throw new IllegalArgumentException(
-                "Item de matrícula não encontrado.");
+                "Item de matrícula não encontrado."
+        );
     }
 
     public String getMatricula() {
@@ -86,6 +104,12 @@ public class Aluno extends Usuario {
         }
 
         this.matriculas = matriculas;
+
+        for (MatriculaSemestral matriculaSemestral : matriculas) {
+            if (matriculaSemestral != null) {
+                matriculaSemestral.setAluno(this);
+            }
+        }
     }
 
     @Override
