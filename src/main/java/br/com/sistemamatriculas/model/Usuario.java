@@ -1,11 +1,12 @@
 package br.com.sistemamatriculas.model;
 
 public abstract class Usuario {
+
     private Long id;
     private String nome;
     private String login;
     private String senha;
-    
+
     public Usuario(Long id, String nome, String login, String senha) {
         this.id = id;
         this.nome = nome;
@@ -13,12 +14,13 @@ public abstract class Usuario {
         this.senha = senha;
     }
 
-    public boolean autenticar(String senha) {
-        return this.senha.equals(senha);
-    }
+    public boolean autenticar(String loginInformado, String senhaInformada) {
+        if (login == null || senha == null) {
+            return false;
+        }
 
-    public void realizarLogin() {
-        // TODO: implementar o login
+        return login.equals(loginInformado)
+                && senha.equals(senhaInformada);
     }
 
     public Long getId() {
@@ -29,11 +31,11 @@ public abstract class Usuario {
         this.id = id;
     }
 
-    public String getnome() {
+    public String getNome() {
         return nome;
     }
 
-    public void setnome(String nome) {
+    public void setNome(String nome) {
         this.nome = nome;
     }
 
@@ -45,11 +47,19 @@ public abstract class Usuario {
         this.login = login;
     }
 
-    public String getsenha() {
+    public String getSenha() {
         return senha;
     }
 
-    public void setsenha(String senha) {
+    public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    @Override
+    public String toString() {
+        return "Usuario [id=" + id
+                + ", nome=" + nome
+                + ", login=" + login
+                + "]";
     }
 }
