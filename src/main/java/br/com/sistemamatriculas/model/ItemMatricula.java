@@ -9,18 +9,20 @@ public class ItemMatricula {
     private Long id;
     private TipoOpcao tipo;
     private LocalDate dataInclusao;
-
+    private MatriculaSemestral matriculaSemestral;
     private OfertaDisciplina ofertaDisciplina;
 
     public ItemMatricula(
-        Long id,
-        TipoOpcao tipo,
-        LocalDate dataInclusao,
-        OfertaDisciplina ofertaDisciplina
+            Long id,
+            TipoOpcao tipo,
+            LocalDate dataInclusao,
+            MatriculaSemestral matriculaSemestral,
+            OfertaDisciplina ofertaDisciplina
     ) {
         this.id = id;
         this.tipo = tipo;
         this.dataInclusao = dataInclusao;
+        this.matriculaSemestral = matriculaSemestral;
         this.ofertaDisciplina = ofertaDisciplina;
     }
 
@@ -48,11 +50,32 @@ public class ItemMatricula {
         this.dataInclusao = dataInclusao;
     }
 
+    public MatriculaSemestral getMatriculaSemestral() {
+        return matriculaSemestral;
+    }
+
+    public void setMatriculaSemestral(
+            MatriculaSemestral matriculaSemestral
+    ) {
+        this.matriculaSemestral = matriculaSemestral;
+    }
+
     public OfertaDisciplina getOfertaDisciplina() {
         return ofertaDisciplina;
     }
 
-    public void setOfertaDisciplina(OfertaDisciplina ofertaDisciplina) {
+    public void setOfertaDisciplina(
+            OfertaDisciplina ofertaDisciplina
+    ) {
         this.ofertaDisciplina = ofertaDisciplina;
+    }
+
+    @Override
+    public String toString() {
+        return "ItemMatricula [id=" + id
+                + ", tipo=" + tipo
+                + ", dataInclusao=" + dataInclusao
+                + ", ofertaDisciplina=" + ofertaDisciplina
+                + "]";
     }
 }
