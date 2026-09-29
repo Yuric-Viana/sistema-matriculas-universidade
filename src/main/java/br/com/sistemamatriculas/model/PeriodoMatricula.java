@@ -9,18 +9,17 @@ public class PeriodoMatricula {
     private LocalDate dataFim;
 
     public PeriodoMatricula(
-        LocalDate dataInicio,
-        LocalDate dataFim
-    ) {
+            LocalDate dataInicio,
+            LocalDate dataFim) {
         this.dataInicio = dataInicio;
         this.dataFim = dataFim;
     }
 
     public boolean estaAberto() {
-        LocalDate isNow = LocalDate.now();
-        boolean matriculaAberta = dataInicio.isEqual(isNow) || (isNow.isAfter(dataInicio) && isNow.isBefore(dataFim));
-        
-        return matriculaAberta;
+        LocalDate hoje = LocalDate.now();
+
+        return (hoje.isEqual(dataInicio) || hoje.isAfter(dataInicio))
+                && (hoje.isEqual(dataFim) || hoje.isBefore(dataFim));
     }
 
     public LocalDate getDataInicio() {
@@ -38,4 +37,5 @@ public class PeriodoMatricula {
     public void setDataFim(LocalDate dataFim) {
         this.dataFim = dataFim;
     }
+
 }
