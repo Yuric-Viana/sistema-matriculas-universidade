@@ -17,8 +17,10 @@ public class PeriodoMatricula {
     }
 
     public boolean estaAberto() {
-        // TODO: implementar na próxima sprint
-        return false;
+        LocalDate isNow = LocalDate.now();
+        boolean matriculaAberta = dataInicio.isEqual(isNow) || (isNow.isAfter(dataInicio) && isNow.isBefore(dataFim));
+        
+        return matriculaAberta;
     }
 
     public LocalDate getDataInicio() {
