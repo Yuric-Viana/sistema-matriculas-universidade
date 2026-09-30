@@ -7,24 +7,25 @@ public abstract class Usuario {
     private String login;
     private String senha;
 
-    public Usuario(
-            Long id,
-            String nome,
-            String login,
-            String senha) {
-
+    public Usuario(Long id, String nome, String login, String senha) {
         this.id = id;
         this.nome = nome;
         this.login = login;
         this.senha = senha;
     }
 
-    public boolean autenticar(String senha) {
-        return this.senha.equals(senha);
+    public boolean autenticar(String loginInformado, String senhaInformada) {
+        if (login == null || senha == null) {
+            throw new IllegalArgumentException("O login e a senha precisam ser informados.");
+        }
+
+        System.out.println("Usuário autenticado!");
+
+        return true;
     }
 
     public void realizarLogin(String login, String senha) {
-        boolean userAuthenticated = this.login.equals(login) && autenticar(senha);
+        boolean userAuthenticated = this.login.equals(login) && this.senha.equals(senha);
 
         if (userAuthenticated) {
             System.out.println("Usuário logado!");
@@ -63,5 +64,13 @@ public abstract class Usuario {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    @Override
+    public String toString() {
+        return "Usuario [id=" + id
+                + ", nome=" + nome
+                + ", login=" + login
+                + "]";
     }
 }

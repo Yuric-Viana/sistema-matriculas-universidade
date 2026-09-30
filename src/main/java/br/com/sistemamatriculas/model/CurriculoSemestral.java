@@ -17,11 +17,8 @@ public class CurriculoSemestral {
 
     public void adicionarOferta(OfertaDisciplina ofertaDisciplina) {
         if (ofertaDisciplina == null) {
-            throw new IllegalArgumentException(
-                    "A oferta não pode ser nula."
-            );
+            throw new IllegalArgumentException("A oferta não pode ser nula.");
         }
-
         if (!ofertas.contains(ofertaDisciplina)) {
             ofertas.add(ofertaDisciplina);
         }

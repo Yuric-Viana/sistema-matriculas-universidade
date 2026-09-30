@@ -34,8 +34,7 @@ public class Aluno extends Usuario {
 
             for (OfertaDisciplina oferta : semestre.getOfertas()) {
 
-                if (oferta.verificarDisponibilidaDeVagas()
-                        && !ofertasDisponiveis.contains(oferta)) {
+                if (oferta.verificarDisponibilidadeVagas() && !ofertasDisponiveis.contains(oferta)) {
 
                     ofertasDisponiveis.add(oferta);
                 }

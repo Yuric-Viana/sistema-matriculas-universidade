@@ -124,19 +124,19 @@ public class MatriculaSemestral {
 
         if (!itens.contains(item)) {
             throw new IllegalArgumentException(
-                    "O item informado não pertence a esta matrícula.");
+                    "Este item não pertence a esta matrícula.");
         }
 
         itens.remove(item);
-
-        if (item.getOfertaDisciplina() != null) {
-            item.getOfertaDisciplina().removerItemMatricula(item);
-        }
+        item.getOfertaDisciplina().removerItemMatricula(item);
     }
 
     public void notificarCobranca() {
         SistemaCobranca sistemaCobranca = new SistemaCobranca();
-        sistemaCobranca.receberNotificacao(this);
+
+        if (sistemaCobranca != null) {
+            sistemaCobranca.receberNotificacao(this);
+        }
     }
 
     public Long getId() {
@@ -149,10 +149,6 @@ public class MatriculaSemestral {
 
     public LocalDate getDataMatricula() {
         return dataMatricula;
-    }
-
-    public void setDataMatricula(LocalDate dataMatricula) {
-        this.dataMatricula = dataMatricula;
     }
 
     public Aluno getAluno() {
@@ -188,10 +184,9 @@ public class MatriculaSemestral {
     @Override
     public String toString() {
         return "MatriculaSemestral [id=" + id
-                + ", dataMatricula=" + dataMatricula
-                + ", aluno=" + aluno
+                + ", aluno=" + (aluno != null ? aluno.getNome() : null)
                 + ", semestreLetivo=" + semestreLetivo
-                + ", itens=" + itens
+                + ", itens=" + itens.size()
                 + "]";
     }
 }

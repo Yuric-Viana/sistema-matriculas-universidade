@@ -16,10 +16,10 @@ public class PeriodoMatricula {
     }
 
     public boolean estaAberto() {
-        LocalDate hoje = LocalDate.now();
-
-        return (hoje.isEqual(dataInicio) || hoje.isAfter(dataInicio))
-                && (hoje.isEqual(dataFim) || hoje.isBefore(dataFim));
+        LocalDate isNow = LocalDate.now();
+        boolean matriculaAberta = dataInicio.isEqual(isNow) || (isNow.isAfter(dataInicio) && isNow.isBefore(dataFim));
+        
+        return matriculaAberta;
     }
 
     public LocalDate getDataInicio() {

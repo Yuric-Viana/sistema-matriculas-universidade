@@ -71,7 +71,6 @@ Fornecer uma solução centralizada que permita:
 - 🚫 O número máximo de alunos por disciplina é **60**; ao atingir esse limite, as inscrições são encerradas automaticamente.
 - 📩 Toda matrícula realizada dispara uma notificação ao sistema de cobranças.
 - 🔑 Todos os usuários (aluno, professor, secretaria) possuem login e senha para acesso.
-- 
 ## 🗺️ Diagrama de Caso de Uso
  
 ![Diagrama de Caso de Uso](docs/sistema-matriculas.drawio.png)

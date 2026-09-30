@@ -33,7 +33,7 @@ public class OfertaDisciplina {
         this.itensMatricula = new ArrayList<>();
     }
 
-    public boolean verificarDisponibilidaDeVagas() {
+    public boolean verificarDisponibilidadeVagas() {
         return totalInscritos() < vagasMaximas
                 && status != StatusOfertaDisciplina.CANCELADA
                 && status != StatusOfertaDisciplina.ENCERRADA;
@@ -61,10 +61,6 @@ public class OfertaDisciplina {
         return alunos;
     }
 
-    public boolean podeAbrirTurma() {
-        return totalInscritos() >= minimoAlunos;
-    }
-
     public int totalInscritos() {
         return itensMatricula.size();
     }
@@ -76,7 +72,7 @@ public class OfertaDisciplina {
                     "O item da matrícula não pode ser nulo.");
         }
 
-        if (!verificarDisponibilidaDeVagas()) {
+        if (!verificarDisponibilidadeVagas()) {
             throw new IllegalStateException(
                     "Não existem vagas disponíveis para esta oferta.");
         }
@@ -106,7 +102,7 @@ public class OfertaDisciplina {
 
     public void avaliarAtivacao() {
 
-        if (podeAbrirTurma()) {
+        if (totalInscritos() >= minimoAlunos) {
             status = StatusOfertaDisciplina.ATIVA;
         } else {
             status = StatusOfertaDisciplina.CANCELADA;

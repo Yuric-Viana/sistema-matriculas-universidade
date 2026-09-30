@@ -8,7 +8,7 @@ public class SemestreLetivo {
     private int ano;
     private int periodo;
     private PeriodoMatricula periodoMatricula;
-    private List<OfertaDisciplina> ofertas;
+    private List<OfertaDisciplina> ofertas = new ArrayList<>();
 
     public SemestreLetivo(int ano, int periodo, PeriodoMatricula periodoMatricula) {
         this.ano = ano;
