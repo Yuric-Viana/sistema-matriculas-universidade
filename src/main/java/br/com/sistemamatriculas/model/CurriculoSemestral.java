@@ -8,19 +8,27 @@ public class CurriculoSemestral {
     private Long id;
     private Date dataGeracao;
     private List<OfertaDisciplina> ofertas = new ArrayList<>();
-    
+
     public CurriculoSemestral(Long id, Date dataGeracao) {
         this.id = id;
         this.dataGeracao = dataGeracao;
     }
 
     public void adicionarOferta(OfertaDisciplina ofertaDisciplina) {
-        // TODO: implementar
+        if (ofertaDisciplina == null) {
+            throw new IllegalArgumentException("A oferta não pode ser nula.");
+        }
+        if (!ofertas.contains(ofertaDisciplina)) {
+            ofertas.add(ofertaDisciplina);
+        }
     }
 
-    public void removerOferta(OfertaDisciplina ofertaDisicplina) {
-        // TODO: implementar
-        
+    public void removerOferta(OfertaDisciplina ofertaDisciplina) {
+        ofertas.remove(ofertaDisciplina);
+    }
+
+    public List<OfertaDisciplina> getOfertas() {
+        return ofertas;
     }
 
     public Long getId() {
@@ -39,5 +47,4 @@ public class CurriculoSemestral {
         this.dataGeracao = dataGeracao;
     }
 
-    
 }

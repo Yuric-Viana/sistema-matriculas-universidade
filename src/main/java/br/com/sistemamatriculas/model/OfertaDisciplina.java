@@ -33,7 +33,7 @@ public class OfertaDisciplina {
         this.itensMatricula = new ArrayList<>();
     }
 
-    public boolean verificarDisponibilidaDeVagas() {
+    public boolean verificarDisponibilidadeVagas() {
         return totalInscritos() < vagasMaximas
                 && status != StatusOfertaDisciplina.CANCELADA
                 && status != StatusOfertaDisciplina.ENCERRADA;
@@ -72,7 +72,7 @@ public class OfertaDisciplina {
                     "O item da matrícula não pode ser nulo.");
         }
 
-        if (!verificarDisponibilidaDeVagas()) {
+        if (!verificarDisponibilidadeVagas()) {
             throw new IllegalStateException(
                     "Não existem vagas disponíveis para esta oferta.");
         }

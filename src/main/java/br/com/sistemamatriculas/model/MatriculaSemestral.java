@@ -1,179 +1,77 @@
 package br.com.sistemamatriculas.model;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.ArrayList;
 
 import br.com.sistemamatriculas.enums.TipoOpcao;
 
 public class MatriculaSemestral {
-
     private Long id;
-    private LocalDate dataMatricula;
+    private Date dataMatricula;
     private Aluno aluno;
     private SemestreLetivo semestreLetivo;
-    private List<ItemMatricula> itens;
+    private List<ItemMatricula> itens = new ArrayList<>();
+    private SistemaCobranca sistemaCobranca;
 
-    public MatriculaSemestral(
-            Long id,
-            LocalDate dataMatricula,
-            SemestreLetivo semestreLetivo
-    ) {
+    public MatriculaSemestral(Long id, Date dataMatricula) {
         this.id = id;
         this.dataMatricula = dataMatricula;
-        this.semestreLetivo = semestreLetivo;
-        this.itens = new ArrayList<>();
     }
 
-    public void adicionarItem(
-            OfertaDisciplina oferta,
-            TipoOpcao tipo
-    ) {
-        if (oferta == null) {
+    public void adicionarItem(OfertaDisciplina oferta, TipoOpcao tipo) {
+
+        if (oferta == null || tipo == null) {
             throw new IllegalArgumentException(
-                    "A oferta da disciplina não pode ser nula."
-            );
+                    "Oferta e tipo de opção são obrigatórios.");
         }
 
-        if (tipo == null) {
-            throw new IllegalArgumentException(
-                    "O tipo da matrícula não pode ser nulo."
-            );
-        }
-
-        if (semestreLetivo == null) {
+        if (!oferta.verificarDisponibilidadeVagas()) {
             throw new IllegalStateException(
-                    "A matrícula deve estar associada a um semestre letivo."
-            );
+                    "Não há vagas disponíveis nessa oferta.");
         }
 
-        if (semestreLetivo.getPeriodoMatricula() == null) {
-            throw new IllegalStateException(
-                    "O semestre não possui período de matrícula."
-            );
-        }
-
-        if (!semestreLetivo.getPeriodoMatricula().estaAberto()) {
-            throw new IllegalStateException(
-                    "O período de matrícula está fechado."
-            );
-        }
-
-        if (!oferta.verificarDisponibilidaDeVagas()) {
-            throw new IllegalStateException(
-                    "Não existem vagas disponíveis para essa disciplina."
-            );
-        }
-
-        long quantidadeObrigatorias = itens.stream()
-                .filter(item ->
-                        item.getTipo() == TipoOpcao.OBRIGATORIA)
-                .count();
-
-        long quantidadeOptativas = itens.stream()
-                .filter(item ->
-                        item.getTipo() == TipoOpcao.OPTATIVA)
-                .count();
-
-        if (tipo == TipoOpcao.OBRIGATORIA
-                && quantidadeObrigatorias >= 4) {
-
-            throw new IllegalStateException(
-                    "O aluno já possui 4 disciplinas obrigatórias."
-            );
-        }
-
-        if (tipo == TipoOpcao.OPTATIVA
-                && quantidadeOptativas >= 2) {
-
-            throw new IllegalStateException(
-                    "O aluno já possui 2 disciplinas optativas."
-            );
-        }
-
-        boolean jaMatriculado = itens.stream()
-                .anyMatch(item ->
-                        item.getOfertaDisciplina() == oferta);
-
-        if (jaMatriculado) {
-            throw new IllegalStateException(
-                    "O aluno já está matriculado nessa disciplina."
-            );
-        }
-
-        Long itemId = (long) (itens.size() + 1);
-
-        ItemMatricula novoItem = new ItemMatricula(
-                itemId,
+        ItemMatricula item = new ItemMatricula(
+                null,
                 tipo,
                 LocalDate.now(),
                 this,
                 oferta
         );
 
-        itens.add(novoItem);
-
-        oferta.adicionarItemMatricula(novoItem);
-
-        notificarCobranca();
+        itens.add(item);
+        oferta.adicionarItemMatricula(item);
     }
 
     public void cancelarItem(ItemMatricula item) {
 
         if (item == null) {
             throw new IllegalArgumentException(
-                    "O item da matrícula não pode ser nulo."
-            );
-        }
-
-        if (semestreLetivo == null
-                || semestreLetivo.getPeriodoMatricula() == null) {
-
-            throw new IllegalStateException(
-                    "Não existe período de matrícula configurado."
-            );
-        }
-
-        if (!semestreLetivo.getPeriodoMatricula().estaAberto()) {
-            throw new IllegalStateException(
-                    "Não é possível cancelar fora do período de matrícula."
-            );
+                    "O item não pode ser nulo.");
         }
 
         if (!itens.contains(item)) {
             throw new IllegalArgumentException(
-                    "O item informado não pertence a esta matrícula."
-            );
+                    "Este item não pertence a esta matrícula.");
         }
 
         itens.remove(item);
-
-        if (item.getOfertaDisciplina() != null) {
-            item.getOfertaDisciplina().removerItemMatricula(item);
-        }
+        item.getOfertaDisciplina().removerItemMatricula(item);
     }
 
     public void notificarCobranca() {
-        System.out.println(
-                "Sistema de cobrança notificado sobre a matrícula "
-                        + id + "."
-        );
+        if (sistemaCobranca != null) {
+            sistemaCobranca.receberNotificacao(this);
+        }
     }
 
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public LocalDate getDataMatricula() {
+    public Date getDataMatricula() {
         return dataMatricula;
-    }
-
-    public void setDataMatricula(LocalDate dataMatricula) {
-        this.dataMatricula = dataMatricula;
     }
 
     public Aluno getAluno() {
@@ -188,32 +86,36 @@ public class MatriculaSemestral {
         return semestreLetivo;
     }
 
-    public void setSemestreLetivo(
-            SemestreLetivo semestreLetivo
-    ) {
-        this.semestreLetivo = semestreLetivo;
-    }
-
     public List<ItemMatricula> getItens() {
         return itens;
     }
 
-    public void setItens(List<ItemMatricula> itens) {
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-        if (itens == null) {
-            this.itens = new ArrayList<>();
-        } else {
-            this.itens = itens;
-        }
+    public void setDataMatricula(Date dataMatricula) {
+        this.dataMatricula = dataMatricula;
+    }
+
+    public void setSemestreLetivo(SemestreLetivo semestreLetivo) {
+        this.semestreLetivo = semestreLetivo;
+    }
+
+    public void setItens(List<ItemMatricula> itens) {
+        this.itens = itens;
+    }
+
+    public void setSistemaCobranca(SistemaCobranca sistemaCobranca) {
+        this.sistemaCobranca = sistemaCobranca;
     }
 
     @Override
     public String toString() {
         return "MatriculaSemestral [id=" + id
-                + ", dataMatricula=" + dataMatricula
-                + ", aluno=" + aluno
+                + ", aluno=" + (aluno != null ? aluno.getNome() : null)
                 + ", semestreLetivo=" + semestreLetivo
-                + ", itens=" + itens
+                + ", itens=" + itens.size()
                 + "]";
     }
 }
