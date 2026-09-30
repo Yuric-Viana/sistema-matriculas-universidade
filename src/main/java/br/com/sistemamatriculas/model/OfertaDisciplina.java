@@ -61,6 +61,10 @@ public class OfertaDisciplina {
         return alunos;
     }
 
+    public boolean podeAbrirTurma() {
+        return totalInscritos() >= minimoAlunos;
+    }
+
     public int totalInscritos() {
         return itensMatricula.size();
     }
@@ -102,7 +106,7 @@ public class OfertaDisciplina {
 
     public void avaliarAtivacao() {
 
-        if (totalInscritos() >= minimoAlunos) {
+        if (podeAbrirTurma()) {
             status = StatusOfertaDisciplina.ATIVA;
         } else {
             status = StatusOfertaDisciplina.CANCELADA;
