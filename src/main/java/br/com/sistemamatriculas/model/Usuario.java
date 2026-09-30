@@ -1,12 +1,18 @@
 package br.com.sistemamatriculas.model;
 
 public abstract class Usuario {
+
     private Long id;
     private String nome;
     private String login;
     private String senha;
-    
-    public Usuario(Long id, String nome, String login, String senha) {
+
+    public Usuario(
+            Long id,
+            String nome,
+            String login,
+            String senha) {
+
         this.id = id;
         this.nome = nome;
         this.login = login;
@@ -17,8 +23,14 @@ public abstract class Usuario {
         return this.senha.equals(senha);
     }
 
-    public void realizarLogin() {
-        // TODO: implementar o login
+    public void realizarLogin(String login, String senha) {
+        boolean userAuthenticated = this.login.equals(login) && autenticar(senha);
+
+        if (userAuthenticated) {
+            System.out.println("Usuário logado!");
+        } else {
+            System.out.println("Login e/ou senha inválidos.");
+        }
     }
 
     public Long getId() {
