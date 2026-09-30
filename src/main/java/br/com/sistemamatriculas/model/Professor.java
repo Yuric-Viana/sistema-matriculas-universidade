@@ -11,9 +11,7 @@ public class Professor extends Usuario {
     }
 
     public List<Aluno> consultarAlunosMatriculados(OfertaDisciplina oferta) {
-        // TODO: implementar
-
-        return null; 
+        return oferta.getAlunosMatriculados();
     }
 
     public String getRegistro() {
@@ -24,5 +22,4 @@ public class Professor extends Usuario {
         this.registro = registro;
     }
 
-    
 }
