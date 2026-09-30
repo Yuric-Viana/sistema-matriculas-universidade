@@ -49,12 +49,14 @@ Fornecer uma solução centralizada que permita:
  
 ## 📁 Estrutura do Projeto
 
+```text
 src/main/java/br/com/sistemamatriculas/
 ├── model/        # Entidades e regras de domínio
 ├── enums/        # Enumerações utilizadas pelo sistema
 ├── repository/   # Persistência dos dados em arquivos
 ├── util/         # Utilitários da aplicação
 └── Main.java     # Interface e fluxo principal pelo terminal
+```
  
 ### 🏫 Secretaria
  
