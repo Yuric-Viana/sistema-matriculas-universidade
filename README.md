@@ -80,14 +80,39 @@ Fornecer uma solução centralizada que permita:
 ![Diagrama de Classes](docs/diagrama-classes.png)
  
 ## 🛠️ Como executar
- 
-> _(a preencher)_
+
+### Pré-requisitos
+
+Antes de executar o projeto, certifique-se de possuir instalado:
+
+- Java JDK 17 ou superior;
+- Apache Maven;
+- Git.
+
+### 1. Clone o repositório
+
+git clone https://github.com/juliaszventura/sistema-matriculas-universidade.git
+
+2. Acesse a pasta do projeto
+cd sistema-matriculas-universidade
+
+3. Compile o projeto
+mvn clean compile
+
+4. Execute a aplicação
+java -cp target/classes br.com.sistemamatriculas.Main
+
+A aplicação será executada diretamente pelo terminal, onde será possível criar uma conta e acessar as funcionalidades de acordo com o tipo de usuário:
+- Aluno;
+- Professor;
+- Secretaria.
+Os dados cadastrados durante a utilização do sistema são armazenados localmente em arquivos .txt na pasta dados/, criada automaticamente pela aplicação.
  
 ## 🚀 Status do Projeto
  
 - [x] Lab01S01 — Diagrama de Caso de Uso + Histórias de Usuário
 - [x] Lab01S02 — Diagrama de Classes + stub do projeto Java
-- [ ] Lab01S03 — Protótipo funcional (interface + persistência)
+- [x] Lab01S03 — Protótipo funcional (interface + persistência)
 
 ## ✍️ Autores
  
