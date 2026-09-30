@@ -1,5 +1,7 @@
 package br.com.sistemamatriculas.model;
 
+import java.util.Date;
+
 public class Secretaria extends Usuario {
     private String setor;
 
@@ -9,9 +11,21 @@ public class Secretaria extends Usuario {
     }
 
     public CurriculoSemestral gerarCurriculo(SemestreLetivo semestre) {
-        // TODO: implementar  
 
-        return null;
+        if (semestre == null) {
+            throw new IllegalArgumentException(
+                    "O semestre letivo não pode ser nulo.");
+        }
+
+        CurriculoSemestral curriculo = new CurriculoSemestral(
+                System.currentTimeMillis(),
+                new Date());
+
+        for (OfertaDisciplina oferta : semestre.getOfertas()) {
+            curriculo.adicionarOferta(oferta);
+        }
+
+        return curriculo;
     }
 
     public void gerenciarCursos(Curso curso) {
@@ -37,5 +51,5 @@ public class Secretaria extends Usuario {
     public void setSetor(String setor) {
         this.setor = setor;
     }
-    
+
 }
