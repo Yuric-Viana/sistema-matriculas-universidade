@@ -19,9 +19,9 @@ public abstract class Usuario {
             throw new IllegalArgumentException("O login e a senha precisam ser informados.");
         }
 
-        System.out.println("Usuário autenticado!");
+        boolean isAuthenticated = this.login.equals(loginInformado) && this.senha.equals(senhaInformada);
 
-        return true;
+        return isAuthenticated;
     }
 
     public void realizarLogin(String login, String senha) {

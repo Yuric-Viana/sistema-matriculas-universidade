@@ -52,7 +52,7 @@ public class MatriculaSemestral {
                     "O período de matrícula está fechado.");
         }
 
-        if (!oferta.verificarDisponibilidaDeVagas()) {
+        if (!oferta.verificarDisponibilidadeVagas()) {
             throw new IllegalStateException(
                     "Não existem vagas disponíveis para essa disciplina.");
         }
